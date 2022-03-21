@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <script crossorigin="anonymous" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" rel="stylesheet">
+    <script crossorigin="anonymous" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <title>Serial Devices - Management</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/masterpi">Peddy Room System</a>
+        <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/home">Overview</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sensors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Interactions</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdownMenuLink" role="button">
+                        Devices
+                    </a>
+                    <div aria-labelledby="navbarDropdownMenuLink" class="dropdown-menu">
+                        <a class="dropdown-item" href="/serialdevices">Serial Devices</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main">
+        <div class="jumbotron">
+            <div class="container">
+                <h1 class="display-3">Manage Serial Device</h1>
+                <p>This is the management page for the Serial Devices present in the system. Here an administrator can
+                perform several tasks on a serial device such as <b>Change the Device Name</b>, <b>Change the device's serial
+                    port Baud Rate</b>, <b>Check the devices schematics (In cases which such applies)</b>, <b>Check or change
+                    a device's description</b>, <b>Check a device's status</b>, <b>Start/Stop the device</b> and perform other
+                relevant operations on the device according to it's type (Interaction, Sensor, ...)</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="container" th:object="${SerialDevice}">
+        <div class="row">
+
+            <div class="col-md-3" style="margin: auto auto 5px;">
+                <h2 style="text-align: center;">Device Name</h2>
+                <p>This option changes a device's friendly name which is the name by which a regular person can easily
+                identify the device. This option does not change a device's serial port name as this name is used for other
+                important purposes that require the name of the Serial Port to remain as system default.</p>
+                <p style="text-align: center;"><a class="btn btn-secondary" role="button" style="color: white" th:href="@{/serialdevices/manage/{id}/name(id = ${SerialDevice.getSerialPort().getSystemPortName()})}">Change Device Name »</a></p>
+            </div>
+
+            <div class="col-md-3" style="margin: auto auto 5px;">
+                <h2 style="text-align: center;">Port Baud Rate</h2>
+                <p>This option allows an administrator to change the Baud Rate of the serial port that the device is connected
+                to. Be warned though that on the end of the serial device itself the Baud Rate will also be changed in order to
+                comply with the change on the infrastructure itself.</p>
+                <p style="text-align: center;"><a class="btn btn-secondary" role="button" style="color: white" th:href="@{/serialdevices/manage/{id}/rate(id = ${SerialDevice.getSerialPort().getSystemPortName()})}">Change Baud Rate »</a></p>
+            </div>
+
+            <div class="col-md-3" style="margin: auto auto 5px;">
+                <h2 style="text-align: center;">Device Schematic</h2>
+                <p>Here the schematic of the serial device can be checked in cases where such is applicable. This will allow
+                the administrator or other personnel diagnose errors or malfunctioning of the device itself and easily repair
+                them if necessary. Besides the schematic itself this file will contain all the necessary components and code
+                that make the device function properly.</p>
+                <p style="text-align: center;"><a class="btn btn-secondary" role="button" style="color: white" th:href="@{/serialdevices/manage/{id}/schematic(id = ${SerialDevice.getSerialPort().getSystemPortName()})}">Device Schematic »</a></p>
+            </div>
+
+            <div class="col-md-3" style="margin: auto auto 5px;">
+                <h2 style="text-align: center;">Device Description</h2>
+                <p>A description of the device itself on what is the purpose of the device, how it operates, how it collects
+                data, etc... This is something that can either be set up at the setup of the device or, in case of absence of
+                    a description, an administrator can choose to create one for the device.</p>
+                <p style="text-align: center;"><a class="btn btn-secondary" role="button" style="color: white" th:href="@{/serialdevices/manage/{id}/description(id = ${SerialDevice.getSerialPort().getSystemPortName()})}">Device Description »</a></p>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-3" style="margin: auto auto 5px;">
+                    <h2 style="text-align: center;">Device Status/Logs</h2>
+                    <p>Here an administrator can check the status of the serial device and check whether this one is running
+                        functioning properly, taking part in a game, which data is currently taking place, etc... Besides this
+                        the logs of the device can also be checked to see recent activity history regarding the device.</p>
+                    <p style="text-align: center;"><a class="btn btn-secondary" href="#" role="button" style="color: white">Device Status »</a></p>
+                </div>
+
+                <div class="col-md-3" style="margin: auto auto 5px;" th:if="${SerialDevice.isRunning()}">
+                    <h2 style="text-align: center;">Stop Device</h2>
+                    <p>In case a device must be stopped for maintenance reasons or for other purposes this option allows to stop
+                        that device. In case of wanting to stop a device, this option can only be executed
+                        if the device is not taking part into an Escape The Room game or other type of major interaction form.</p>
+                    <p style="text-align: center;"><a class="btn btn-secondary" role="button" style="color: white" th:href="@{/serialdevices/manage/{id}/stop (id = ${SerialDevice.getSerialPort().getSystemPortName()})}">Stop Device »</a></p>
+                </div>
+
+                <div class="col-md-3" style="margin: auto auto 5px;" th:unless="${SerialDevice.isRunning()}">
+                    <h2 style="text-align: center;">Start Device</h2>
+                    <p>In case a device was stopped for maintenance reasons or for other purposes this option allows to start
+                        that device again. In case of wanting to stop a device, this option can only be executed
+                        if the device is not taking part into an Escape The Room game or other type of major interaction form.</p>
+                    <p style="text-align: center;"><a class="btn btn-secondary" role="button" style="color: white" th:href="@{/serialdevices/manage/{id}/start (id = ${SerialDevice.getSerialPort().getSystemPortName()})}">Start Device »</a></p>
+                </div>
+
+                <div class="col-md-3" style="margin: auto auto 5px;">
+                    <!--<div th:if="${SerialDevice.getType().toString() == 'INTERACTION'}">
+                        <h2 style="text-align: center;">Interaction Points</h2>
+                        <p>This option allows you to change the points that an Interaction credits a user once he is able
+                        to solve said interaction correctly. This can be used to calculate for example the number of total
+                        points a user gets once he finishes an Escape The Room game.</p>
+                        <p style="text-align: center;"><a class="btn btn-secondary" href="#" role="button" style="color: white">Set Interaction Points »</a></p>
+                    </div>-->
+
+                    <div th:if="${SerialDevice.getType().toString() == 'SENSOR'}">
+                        <h2 style="text-align: center;">Sensor Frequency</h2>
+                        <p>This option allows you to change the frequency at which a sensor acquires a certain type of data
+                            from the environment. This option sends a message to the sensor in order to perform this change
+                        and this setting is also stored in the system</p>
+                        <p style="text-align: center;"><a class="btn btn-secondary" role="button" style="color: white" th:href="@{/serialdevices/manage/{id}/sensorfrequency (id = ${SerialDevice.getSerialPort().getSystemPortName()})}">Set Sensor Frequency »</a></p>
+                    </div>
+                </div>
+
+                <div class="col-md-3" style="margin: auto auto 5px;">
+                    <h2 style="text-align: center;">Device Location</h2>
+                    <p>See and change the location where this device is currently deployed. This feature is extremely important,
+                    especially for the sensors so that, when the read values are to be presented, they can be grouped up and
+                    show the information about the museum in a more organized and readable way.</p>
+                    <p style="text-align: center;"><a class="btn btn-secondary" role="button" style="color: white" th:href="@{/serialdevices/manage/{id}/location (id = ${SerialDevice.getSerialPort().getSystemPortName()})}">Device Location »</a></p>
+                </div>
+
+            </div>
+            <hr>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script crossorigin="anonymous" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" rel="stylesheet">
+    <script crossorigin="anonymous" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <title>Serial Devices - Add</title>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/masterpi">Peddy Room System</a>
+        <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/home">Overview</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sensors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Interactions</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdownMenuLink" role="button">
+                        Devices
+                    </a>
+                    <div aria-labelledby="navbarDropdownMenuLink" class="dropdown-menu">
+                        <a class="dropdown-item" href="/serialdevices">Serial Devices</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main">
+        <div class="jumbotron">
+            <div class="container">
+                <h1 class="display-3">Add Serial Device</h1>
+                <p>Here an administrator can choose to add a new Serial Device to the selected Interaction Pi. This serial
+                device can be ordered to perform different kind of roles such as those of gathering relevant data regarding the
+                museum (Like temperature, movement, etc...) or just be added as an interaction to the museum that visitors can
+                interact with as part of a bigger picture (Escape The Room) or as an individual form of interaction.</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="col-md-8 col-md-offset-8" style="margin: auto">
+        <table class="table" style="text-align: center">
+            <thead>
+                <tr>
+                    <th scope="col">Serial Port ID</th>
+                    <th scope="col">Serial Port Description</th>
+                    <th scope="col">Baud Rate</th>
+                    <th scope="col">Serial Device Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="serialdevice : ${SerialDevices}">
+                    <td style="vertical-align: middle;"><span th:text="${serialdevice.getSystemPortName()}">Serial Port ID</span></td>
+                    <td style="vertical-align: middle;"><span th:text="${serialdevice.getPortDescription()}">Serial Port Description</span></td>
+                    <td style="vertical-align: middle;"><span th:text="${serialdevice.getBaudRate()}">Baud Rate</span></td>
+                    <td style="vertical-align: middle;">
+                        <form method="post" style="align-items: center; display: flex; justify-content: space-around;" th:action="@{/serialdevices/add/submit}" th:object="${SerialDeviceDTO}">
+                            <input class="form-control" hidden th:data1="${serialdevice.getSystemPortName()}" th:field="*{serialPort.systemPortName}" type="text">
+                            <input class="form-control" hidden th:data1="${serialdevice.getPortDescription()}" th:field="*{serialPort.portDescription}" type="text">
+                            <input class="form-control" hidden th:data1="${serialdevice.getBaudRate()}" th:field="*{serialPort.baudRate}" type="text">
+                            <div>
+                                <input class="form-control" id="type_interaction" name="type" th:data1="INTERACTION" th:field="*{type}" type="radio" value="INTERACTION">
+                                <label for="type_interaction">Interaction</label>
+                            </div>
+                            <div>
+                                <input class="form-control" id="type_sensor" name="type" th:data1="SENSOR" th:field="*{type}" type="radio" value="SENSOR">
+                                <label for="type_sensor">Sensor</label>
+                            </div>
+                            <button class="btn btn-primary" th:onclick="javascript:setValueAttribute(this.parentElement);" type="submit">Add Serial Device</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function setValueAttribute(element) {
+            var children = element.childNodes;
+            children.forEach(child => setValue(child));
+        }
+
+        function setValue(element) {
+            if(element.tagName === "INPUT") {
+                element.setAttribute("value", element.getAttribute("data1"));
+            }else{
+                console.log(element.tagName)
+            }
+        }
+    </script>
+
+</body>
+</html>
