@@ -1,6 +1,6 @@
 # InteractionPi
 
-The InteractionPi is the process that was designed, in the context of my master thesis, to run on Raspberry Pi's in order to communicate with the interactions that were developed for this work. This process has the main responsability of creating the bridge between the [Master Pi]() and the interactions that are connected to the Raspberry Pi where this process is running.
+The InteractionPi is the process that was designed, in the context of my master thesis, to run on Raspberry Pi's in order to communicate with the interactions that were developed for this work. This process has the main responsability of creating the bridge between the [Master Pi](https://github.com/pmsmm/MasterPi) and the interactions that are connected to the Raspberry Pi where this process is running.
 
 The InteractionPi has several functions besides the one specified above which can be seen as the most general of its functions. In specific the InteractionPi is responsible for:
 
