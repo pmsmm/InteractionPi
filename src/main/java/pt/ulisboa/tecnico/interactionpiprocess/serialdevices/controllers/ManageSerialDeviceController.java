@@ -1,6 +1,6 @@
 package pt.ulisboa.tecnico.interactionpiprocess.serialdevices.controllers;
 
-import com.sun.istack.NotNull;
+import com.sun.istack.internal.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +25,8 @@ import java.util.concurrent.TimeoutException;
 public class ManageSerialDeviceController {
 
     @GetMapping
-    public @NotNull ModelAndView index() {
+    public @NotNull
+    ModelAndView index() {
         return new ModelAndView("redirect:/serialdevices/all");
     }
 

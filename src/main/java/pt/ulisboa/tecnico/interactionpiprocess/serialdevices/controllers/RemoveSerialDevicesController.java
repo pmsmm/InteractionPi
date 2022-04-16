@@ -1,6 +1,6 @@
 package pt.ulisboa.tecnico.interactionpiprocess.serialdevices.controllers;
 
-import com.sun.istack.NotNull;
+import com.sun.istack.internal.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +15,8 @@ import pt.ulisboa.tecnico.interactionpiprocess.serialdevices.service.device.Seri
 public class RemoveSerialDevicesController {
 
     @PostMapping(value = "/{serialDeviceID}")
-    public @NotNull String removeSerialDeviceByID(@PathVariable("serialDeviceID")String serialDeviceID, Model model) {
+    public @NotNull
+    String removeSerialDeviceByID(@PathVariable("serialDeviceID")String serialDeviceID, Model model) {
         try {
             model.addAttribute("SuccessMessage", SerialDevicesHandler.getInstance().removeSerialDevice(serialDeviceID));
             return "Feedback Pages/Success";
