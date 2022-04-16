@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.interactionpiprocess.serialdevices.controllers;
 
-import com.sun.istack.internal.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pt.ulisboa.tecnico.interactionpiprocess.exceptions.NoSuchSerialDeviceException;
 import pt.ulisboa.tecnico.interactionpiprocess.exceptions.SingletonException;
 import pt.ulisboa.tecnico.interactionpiprocess.serialdevices.service.device.SerialDevicesHandler;
+
+import javax.validation.constraints.NotNull;
 
 @Controller
 @RequestMapping("/serialdevices/remove")

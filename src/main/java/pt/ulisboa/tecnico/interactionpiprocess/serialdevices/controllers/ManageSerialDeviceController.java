@@ -1,6 +1,5 @@
 package pt.ulisboa.tecnico.interactionpiprocess.serialdevices.controllers;
 
-import com.sun.istack.internal.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +13,7 @@ import pt.ulisboa.tecnico.interactionpiprocess.exceptions.*;
 import pt.ulisboa.tecnico.interactionpiprocess.serialdevices.dto.SerialSensorFrequencyDTO;
 import pt.ulisboa.tecnico.interactionpiprocess.serialdevices.service.device.*;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
